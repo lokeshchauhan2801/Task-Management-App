@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TaskForm from "../components/TaskForm";
 import TaskTable from "../components/TasksTable";
-
+import { createTask, getTasks } from "../utils/taskStorage";
 const data = [
   {
     id: 1,
@@ -28,7 +28,9 @@ const data = [
 ];
 const TasksPage = () => {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
-  const [tasks, setTasks] = useState(data);
+  // console.log(getTasks());
+  
+  const [tasks, setTasks] = useState(getTasks());
 
   const addTask = (newTask) => {
     setTasks([...tasks, { ...newTask, id: Date.now() }]);
@@ -47,7 +49,16 @@ const TasksPage = () => {
         <TaskTable tasks={tasks} />
       </div>
 
-      {isTaskModalOpen && <TaskForm onSaveClick={addTask} onCancelClick={handleToggleTaskModal} />}
+      {isTaskModalOpen && (
+        <TaskForm
+          onSaveClick={addTask}
+          onCancelClick={handleToggleTaskModal}
+          onSubmit={(task) => {
+            createTask(task);
+            location.reload();
+          }}
+        />
+      )}
     </div>
   );
 };

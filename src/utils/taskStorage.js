@@ -2,6 +2,15 @@
 
 // Key to be used in localStorage
 const STORAGE_KEY = "taskList";
+const OFFSET = "offset";
+
+export const generateId = () => {
+  const currId = Number(localStorage.getItem(OFFSET)) || 0
+  return currId+1;
+}
+export const setOffset = () => {
+  localStorage.setItem(OFFSET, generateId())
+}
 
 // Get the list of tasks from localStorage
 export const getTasks = () => {
@@ -17,8 +26,10 @@ const saveTasks = (tasks) => {
 // Create a new task and add it to localStorage
 export const createTask = (newTask) => {
   const tasks = getTasks();
+  newTask.id = generateId()
   tasks.push(newTask);
   saveTasks(tasks);
+  setOffset()
   return newTask;
 };
 

@@ -53,7 +53,16 @@ const TaskForm = ({ onSubmit, onCancelClick }) => {
     },
     validate: validateTaskForm,
     onSubmit: (values) => {
-      onSubmit && onSubmit(values)
+      const task  = {
+        title: values.title,
+        status: values.status?.value,
+        assignedMembers: values.assignedMembers?.map(e=>e.value),
+        dueDate: values.dueDate,
+        isAssigned: values.isAssigned?.value,
+        estimatedHours: values.estimatedHours,
+        priority: values.priority?.value
+      }
+      onSubmit && onSubmit(task)
     },
   });
 
