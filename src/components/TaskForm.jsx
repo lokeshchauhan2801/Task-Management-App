@@ -53,8 +53,6 @@ const TaskForm = ({ onSubmit, onCancelClick }) => {
     },
     validate: validateTaskForm,
     onSubmit: (values) => {
-      console.log(values);
-      
       onSubmit && onSubmit(values)
     },
   });
