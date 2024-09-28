@@ -24,6 +24,7 @@ const assignedOptions = [
   { label: "True", value: "true" },
   { label: "False", value: "false" },
 ];
+
 // eslint-disable-next-line react/prop-types
 const TaskForm = ({ onSaveClick, onCancelClick }) => {
   const [task, setTask] = useState({
@@ -41,9 +42,8 @@ const TaskForm = ({ onSaveClick, onCancelClick }) => {
     setTask({ ...task, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addTask(task);
+  const handleSave = () => {
+    onSaveClick(task); // Call the passed onSaveClick function with the task data
     setTask({
       title: "",
       status: "To Do",
@@ -53,6 +53,11 @@ const TaskForm = ({ onSaveClick, onCancelClick }) => {
       estimatedHours: 0,
       priority: "Low",
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSave(); // Call the handleSave function
   };
 
   return (
