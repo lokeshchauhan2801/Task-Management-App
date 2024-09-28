@@ -33,7 +33,7 @@ const TaskTable = ({ tasks }) => {
               <td>{task.isAssigned ? "Yes" : "No"}</td>
               <td>{task.estimatedHours}</td>
               <td>{task.priority}</td>
-              <td>{new Date(task.id).toLocaleDateString()}</td>
+              <td>{task.createdOn}</td>
             </tr>
           ))}
         </tbody>
