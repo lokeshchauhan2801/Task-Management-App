@@ -9,7 +9,7 @@ const data = [
     status: "In Progress",
     assignedMembers: ["John Doe", "Jane Smith"],
     dueDate: "2024-10-15",
-    isAssigned: true,
+    isAssigned: "true",
     estimatedHours: 20,
     priority: "High",
     createdOn: "2024-09-28",

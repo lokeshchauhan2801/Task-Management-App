@@ -1,5 +1,7 @@
 // components/TaskForm.jsx
 import { useState } from "react";
+import { useFormik } from "formik";
+import useFormikErrors from "../hooks/useFormikErrors";
 import FormInputWrapper from "./FormInputWrapper";
 import ModalWrapper from "./ModalWrapper";
 import Dropdown from "./Dropdown";
@@ -24,86 +26,139 @@ const assignedOptions = [
   { label: "True", value: "true" },
   { label: "False", value: "false" },
 ];
+
+const validateTaskForm = (values) => {
+  const errors = {};
+  if (!values.title) errors.title = "Please enter title";
+  if (!values.status) errors.status = "Please select status";
+  if (!values.assignedMembers?.length)
+    errors.assignedMembers = "Please select assigned members";
+  if (!values.dueDate) errors.dueDate = "Please select due date";
+  if (!values.isAssigned) errors.isAssigned = "Please select is assigned";
+  if (!values.priority) errors.priority = "Please select priority";
+  return errors;
+};
+
 // eslint-disable-next-line react/prop-types
-const TaskForm = ({ onSaveClick, onCancelClick }) => {
-  const [task, setTask] = useState({
-    title: "",
-    status: "To Do",
-    assignedMembers: [],
-    dueDate: "",
-    isAssigned: false,
-    estimatedHours: 0,
-    priority: "Low",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTask({ ...task, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addTask(task);
-    setTask({
+const TaskForm = ({ onSubmit, onCancelClick }) => {
+  const formik = useFormik({
+    initialValues: {
       title: "",
-      status: "To Do",
+      status: null,
       assignedMembers: [],
       dueDate: "",
-      isAssigned: false,
+      isAssigned: null,
       estimatedHours: 0,
-      priority: "Low",
-    });
-  };
+      priority: null,
+    },
+    validate: validateTaskForm,
+    onSubmit: (values) => {
+      console.log(values);
+      
+      onSubmit && onSubmit(values)
+    },
+  });
+
+  const errors = useFormikErrors(formik);
 
   return (
     <ModalWrapper>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <h2 className="text-xl font-medium mb-4 p-3">Create New Task</h2>
         <div className="overflow-y-auto max-h-[calc(100vh-200px)] px-5">
-          <FormInputWrapper title="Task title">
+          <FormInputWrapper title="Task title" error={errors.title}>
             <input
               type="text"
               name="title"
-              value={task.title}
-              onChange={handleChange}
+              value={formik.values.title}
+              onChange={formik.handleChange}
               placeholder="Task Title"
             />
           </FormInputWrapper>
 
-          <FormInputWrapper title="Status">
-            <Dropdown options={statusOptions} placeholder="Select Status" />
+          <FormInputWrapper title="Status" error={errors.status}>
+            <Dropdown
+              options={statusOptions}
+              placeholder="Select Status"
+              selectedOptions={
+                formik.values.status ? [formik.values.status] : []
+              }
+              onChange={([option]) => {
+                formik.setFieldTouched("status", true);
+                if (option) {
+                  formik.setFieldValue("status", option);
+                }
+              }}
+            />
           </FormInputWrapper>
-          <FormInputWrapper title="Assigned Members">
+          <FormInputWrapper
+            title="Assigned Members"
+            error={errors.assignedMembers}
+          >
             <Dropdown
               options={memberOptions}
               placeholder="Select Assigned Members"
               multiselect
+              selectedOptions={formik.values.assignedMembers}
+              onChange={(options) => {
+                formik.setFieldTouched("assignedMembers", true);
+                if (options) {
+                  formik.setFieldValue("assignedMembers", options);
+                }
+              }}
             />
           </FormInputWrapper>
 
-          <FormInputWrapper title="Is Assigned">
-            <Dropdown options={assignedOptions} placeholder="Is Assigned" />
+          <FormInputWrapper title="Is Assigned" error={errors.isAssigned}>
+            <Dropdown
+              options={assignedOptions}
+              placeholder="Select Is Assigned"
+              selectedOptions={
+                formik.values.isAssigned ? [formik.values.isAssigned] : []
+              }
+              onChange={([option]) => {
+                formik.setFieldTouched("isAssigned", true);
+                if (option) {
+                  formik.setFieldValue("isAssigned", option);
+                }
+              }}
+            />
           </FormInputWrapper>
-          <FormInputWrapper title="Select Priority">
-            <Dropdown options={priorityOptions} placeholder="Select Priority" />
+          <FormInputWrapper title="Select Priority" error={errors.priority}>
+            <Dropdown
+              options={priorityOptions}
+              placeholder="Select Priority"
+              selectedOptions={
+                formik.values.priority ? [formik.values.priority] : []
+              }
+              onChange={([option]) => {
+                formik.setFieldTouched("priority", true);
+                if (option) {
+                  formik.setFieldValue("priority", option);
+                }
+              }}
+            />
           </FormInputWrapper>
 
-          <FormInputWrapper title="Due Date">
+          <FormInputWrapper title="Due Date" error={errors.dueDate}>
             <input
               type="date"
               name="dueDate"
-              value={task.dueDate}
-              onChange={handleChange}
+              value={formik.values.dueDate}
+              onChange={formik.handleChange}
             />
           </FormInputWrapper>
 
-          <FormInputWrapper title="Estimated Hours">
+          <FormInputWrapper
+            title="Estimated Hours"
+            error={errors.estimatedHours}
+          >
             <input
-              type="time"
+              type="number"
               name="estimatedHours"
-              value={task.estimatedHours}
-              onChange={handleChange}
-              placeholder="HH:MM"
+              value={formik.values.estimatedHours}
+              onChange={formik.handleChange}
+              placeholder=""
             />
           </FormInputWrapper>
         </div>
