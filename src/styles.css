@@ -1,0 +1,145 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Background color of the body */
+    margin: 0;
+    padding: 20px;
+}
+
+.app-container {
+    background-color: #ffffff; /* Main app background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.create-task-button {
+    background-color: #ffa500; /* Orange color for the button */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.create-task-button:hover {
+    background-color: #e68a00; /* Darker orange on hover */
+}
+
+.task-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-header th {
+    background-color: #ffa500; /* Header background */
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+.table-row td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Bottom border for rows */
+}
+
+.table-row:hover {
+    background-color: #f9f9f9; /* Row hover effect */
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.page-item {
+    display: inline-block;
+    padding: 10px;
+    margin: 0 5px;
+    background-color: #ffa500; /* Pagination button color */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.page-item.active {
+    background-color: #e68a00; /* Darker shade for active page */
+}
+
+.page-item:hover {
+    background-color: #e68a00; /* Darker shade on hover */
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    width: 400px; /* Fixed width for the modal */
+    max-width: 100%;
+}
+
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer; /* Close button cursor */
+    font-size: 20px; /* Increase size for better visibility */
+}
+
+h2 {
+    margin-top: 0; /* Remove default margin for h2 */
+}
+
+.dropdown {
+    margin: 10px 0; /* Space between dropdowns */
+    position: relative;
+}
+
+.dropdown-header {
+    background: #f0f0f0; /* Dropdown header background */
+    padding: 10px;
+    border: 1px solid #ccc; /* Border for dropdown */
+    border-radius: 5px;
+    cursor: pointer; /* Pointer cursor */
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc; /* Border for dropdown items */
+    border-radius: 5px;
+    z-index: 1000; /* Ensure dropdown is above other elements */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow for dropdown */
+}
+
+.dropdown-item {
+    padding: 10px; /* Space for each dropdown item */
+    cursor: pointer; /* Pointer cursor */
+}
+
+.dropdown-item:hover {
+    background: #f0f0f0; /* Highlight on hover */
+}
+
+label {
+    display: block; /* Block display for labels */
+    margin: 10px 0 5px; /* Margin for spacing */
+}
